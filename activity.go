@@ -54,7 +54,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	if error != nil {
 		return true, err
 	}
-	pin := rpio.Pin(17)
+	pin := rpio.Pin(11)
 	pin.Input() // Input mode
 	res := pin.Read()
 
