@@ -71,7 +71,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
-	humidity, temperature, err := dht.ReadRetry(11)
+	humidity, temperature, err := dht.ReadRetry(100)
 	if err != nil {
 		return true, err
 	}
