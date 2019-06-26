@@ -3,6 +3,7 @@ package sample
 import (
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
+	"github.com/stianeikeland/go-rpio"
 )
 
 func init() {
@@ -44,6 +45,10 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	if err != nil {
 		return true, err
 	}
+
+	pin := rpio.Pin(7)
+	pin.Output() // Output mode
+	pin.High()   // Set pin High
 
 	ctx.Logger().Debugf("Input: %s", input.AnInput)
 
