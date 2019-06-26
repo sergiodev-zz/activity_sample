@@ -60,7 +60,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
-	ctx.Logger().Debugf("Input: %s", sensors)
+	ctx.Logger().Debugf("Input: %s", sensors[0])
 
 	// for _, sensor := range sensors {
 	// 	// t, err := ds18b20.Temperature(sensor)
