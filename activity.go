@@ -1,9 +1,12 @@
 package sample
 
 import (
+	"strconv"
+
+	"github.com/MichaelS11/go-dht"
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
-	"github.com/yryz/ds18b20"
+	"github.com/stianeikeland/go-rpio"
 )
 
 func init() {
@@ -48,28 +51,36 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	ctx.Logger().Debugf("Input: %s", input.AnInput)
 
-	// error := rpio.Open()
-	// if error != nil {
-	// 	return true, err
-	// }
-	// pin := rpio.Pin(17)
-	// pin.Input() // Input mode
+	error := rpio.Open()
+	if error != nil {
+		return true, err
+	}
+	pin := rpio.Pin(17)
+	pin.Input() // Input mode
+	res := pin.Read()
+	// pin := 11
+	// s := dht.DHT12
+	// temperature, humidity, retried, err := dht.ReadDHTxxWithRetry(dht.DHT11, pin, false, 10)
 
-	sensors, err := ds18b20.Sensors()
+	err = dht.HostInit()
 	if err != nil {
 		return true, err
 	}
 
-	ctx.Logger().Debugf("Input: %s", sensors[0])
+	dht1, err := dht.NewDHT("GPIO0", dht.Fahrenheit, "")
+	if err != nil {
+		return true, err
+	}
 
-	// for _, sensor := range sensors {
-	// 	// t, err := ds18b20.Temperature(sensor)
-	// 	if err == nil {
-	// 		fmt.Printf("sensor: %s \n", sensor)
-	// 	}
-	// }
+	humidity, temperature, err := dht1.ReadRetry(11)
+	if err != nil {
+		return true, err
+	}
 
-	output := &Output{AnOutput: "res"}
+	temp := strconv.FormatFloat(temperature, 'f', 6, 64)
+	humy := strconv.FormatFloat(humidity, 'f', 6, 64)
+
+	output := &Output{AnOutput: temp + " - " + humy}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
 		return true, err
