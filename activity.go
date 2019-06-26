@@ -1,12 +1,9 @@
 package sample
 
 import (
-	"os"
-
 	"github.com/d2r2/go-dht"
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
-	"github.com/stianeikeland/go-rpio"
 )
 
 func init() {
@@ -51,19 +48,20 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	ctx.Logger().Debugf("Input: %s", input.AnInput)
 
-	error := rpio.Open()
-	if error != nil {
-		os.Exit(1)
-	}
-	pin := rpio.Pin(17)
-	pin.Input() // Input mode
+	// error := rpio.Open()
+	// if error != nil {
+	// 	return true, err
+	// }
+	// pin := rpio.Pin(17)
+	// pin.Input() // Input mode
+	pin := 11
 	sensorType := dht.DHT11
 	temperature, humidity, retried, err := dht.ReadDHTxxWithRetry(sensorType, pin, false, 10)
 	if err != nil {
 		return true, err
 	}
 
-	output := &Output{temp: temperature}
+	output := &Output{temperature: temperature}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
 		return true, err
