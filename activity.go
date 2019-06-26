@@ -1,7 +1,7 @@
 package sample
 
 import (
-	"fmt"
+	"strconv"
 
 	"github.com/MichaelS11/go-dht"
 	"github.com/project-flogo/core/activity"
@@ -68,19 +68,17 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	dht, err := dht.NewDHT("GPIO17", dht.Fahrenheit, "")
 	if err != nil {
-		fmt.Println("NewDHT error:", err)
-		return
+		return true, err
 	}
 
 	humidity, temperature, err := dht.ReadRetry(11)
 	if err != nil {
-		fmt.Println("Read error:", err)
-		return
+		return true, err
 	}
 
-	// temp := strconv.FormatFloat(temperature, 'f', 6, 64)
+	temp := strconv.FormatFloat(temperature, 'f', 6, 64)
 
-	output := &Output{AnOutput: "temp"}
+	output := &Output{AnOutput: temp}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
 		return true, err
