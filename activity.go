@@ -1,6 +1,8 @@
 package sample
 
 import (
+	"os"
+
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/stianeikeland/go-rpio"
@@ -46,11 +48,15 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
+	ctx.Logger().Debugf("Input: %s", input.AnInput)
+
+	error := rpio.Open()
+	if error != nil {
+		os.Exit(1)
+	}
 	pin := rpio.Pin(7)
 	pin.Output() // Output mode
 	pin.High()   // Set pin High
-
-	ctx.Logger().Debugf("Input: %s", input.AnInput)
 
 	output := &Output{AnOutput: input.AnInput}
 	err = ctx.SetOutputObject(output)
