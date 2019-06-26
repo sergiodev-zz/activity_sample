@@ -5,7 +5,6 @@ import (
 
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
-	"github.com/stianeikeland/go-rpio"
 	"github.com/yryz/ds18b20"
 )
 
@@ -51,24 +50,26 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	ctx.Logger().Debugf("Input: %s", input.AnInput)
 
-	error := rpio.Open()
-	if error != nil {
-		return true, err
-	}
-	pin := rpio.Pin(17)
-	pin.Input() // Input mode
+	// error := rpio.Open()
+	// if error != nil {
+	// 	return true, err
+	// }
+	// pin := rpio.Pin(17)
+	// pin.Input() // Input mode
 
 	sensors, err := ds18b20.Sensors()
 	if err != nil {
 		return true, err
 	}
 
-	for _, sensor := range sensors {
-		t, err := ds18b20.Temperature(sensor)
-		if err == nil {
-			fmt.Printf("sensor: %s temperature: %.2f°C\n", sensor, t)
-		}
-	}
+	fmt.Printf("sensors: %s", sensors)
+
+	// for _, sensor := range sensors {
+	// 	t, err := ds18b20.Temperature(sensor)
+	// 	if err == nil {
+	// 		fmt.Printf("sensor: %s temperature: %.2f°C\n", sensor, t)
+	// 	}
+	// }
 
 	output := &Output{AnOutput: "res"}
 	err = ctx.SetOutputObject(output)
