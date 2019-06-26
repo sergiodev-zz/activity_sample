@@ -1,7 +1,7 @@
 package sample
 
 import (
-	"fmt"
+	"strconv"
 
 	"github.com/d2r2/go-dht"
 	"github.com/project-flogo/core/activity"
@@ -63,7 +63,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
-	temp := fmt.Sprintf("%f", 123.456)
+	temp := strconv.FormatFloat(temperature, 'f', 6, 64)
 
 	output := &Output{AnOutput: temp}
 	err = ctx.SetOutputObject(output)
