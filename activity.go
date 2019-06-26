@@ -1,6 +1,8 @@
 package sample
 
 import (
+	"strconv"
+
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/stianeikeland/go-rpio"
@@ -76,8 +78,9 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	// temp := strconv.FormatFloat(temperature, 'f', 6, 64)
 	// humy := strconv.FormatFloat(humidity, 'f', 6, 64)
+	rsString := strconv.FormatFloat(res, 'f', 6, 64)
 
-	output := &Output{AnOutput: "temp"}
+	output := &Output{AnOutput: res}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
 		return true, err
