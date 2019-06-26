@@ -1,7 +1,6 @@
 package sample
 
 import (
-	"github.com/d2r2/go-dht"
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/stianeikeland/go-rpio"
@@ -56,7 +55,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	pin := rpio.Pin(17)
 	pin.Input() // Input mode
 	// pin := 11
-	sensorType := dht.DHT12
+	// sensorType := dht.DHT12
 	// temperature, humidity, retried, err := dht.ReadDHTxxWithRetry(dht.DHT11, pin, false, 10)
 	if err != nil {
 		return true, err
