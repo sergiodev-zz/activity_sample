@@ -3,6 +3,7 @@ package sample
 import (
 	"os"
 
+	"github.com/d2r2/go-dht"
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/stianeikeland/go-rpio"
@@ -54,11 +55,15 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	if error != nil {
 		os.Exit(1)
 	}
-	pin := rpio.Pin(7)
-	pin.Output() // Output mode
-	pin.High()   // Set pin High
+	pin := rpio.Pin(17)
+	pin.Input() // Input mode
+	sensorType := dht.DHT11
+	temperature, humidity, retried, err := dht.ReadDHTxxWithRetry(sensorType, pin, false, 10)
+	if err != nil {
+		return true, err
+	}
 
-	output := &Output{AnOutput: input.AnInput}
+	output := &Output{temp: temperature}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
 		return true, err
