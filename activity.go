@@ -1,8 +1,6 @@
 package sample
 
 import (
-	"strconv"
-
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/stianeikeland/go-rpio"
@@ -54,9 +52,8 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	if error != nil {
 		return true, err
 	}
-	pin := rpio.Pin(11)
+	pin := rpio.Pin(17)
 	pin.Input() // Input mode
-	res := pin.Read()
 
 	// pin := 11
 	// s := dht.DHT12
@@ -77,7 +74,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	// 	return true, err
 	// }
 
-	temp := strconv.FormatFloat(res, 'f', 6, 64)
+	// temp := strconv.FormatFloat(temperature, 'f', 6, 64)
 	// humy := strconv.FormatFloat(humidity, 'f', 6, 64)
 	output := &Output{AnOutput: ""}
 	err = ctx.SetOutputObject(output)
