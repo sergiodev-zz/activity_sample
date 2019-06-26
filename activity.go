@@ -1,9 +1,12 @@
 package sample
 
 import (
+	"fmt"
+
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/stianeikeland/go-rpio"
+	"github.com/yryz/ds18b20"
 )
 
 func init() {
@@ -54,30 +57,18 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	}
 	pin := rpio.Pin(17)
 	pin.Input() // Input mode
-	res := pin.Read()
-	ctx.Logger().Debugf("Input: %s", res)
-	// pin := 11
-	// s := dht.DHT12
-	// temperature, humidity, retried, err := dht.ReadDHTxxWithRetry(dht.DHT11, pin, false, 10)
 
-	// err = dht.HostInit()
-	// if err != nil {
-	// 	return true, err
-	// }
+	sensors, err := ds18b20.Sensors()
+	if err != nil {
+		return true, err
+	}
 
-	// dht1, err := dht.NewDHT("GPIO17", dht.Fahrenheit, "")
-	// if err != nil {
-	// 	return true, err
-	// }
-
-	// humidity, temperature, err := dht1.ReadRetry(11)
-	// if err != nil {
-	// 	return true, err
-	// }
-
-	// temp := strconv.FormatFloat(temperature, 'f', 6, 64)
-	// humy := strconv.FormatFloat(humidity, 'f', 6, 64)
-	// rsString := strconv.FormatFloat(res, 'f', 6, 64)
+	for _, sensor := range sensors {
+		t, err := ds18b20.Temperature(sensor)
+		if err == nil {
+			fmt.Printf("sensor: %s temperature: %.2f°C\n", sensor, t)
+		}
+	}
 
 	output := &Output{AnOutput: "res"}
 	err = ctx.SetOutputObject(output)
