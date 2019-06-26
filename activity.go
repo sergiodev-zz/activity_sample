@@ -54,7 +54,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	}
 	pin := rpio.Pin(17)
 	pin.Input() // Input mode
-
+	res := pin.Read()
 	// pin := 11
 	// s := dht.DHT12
 	// temperature, humidity, retried, err := dht.ReadDHTxxWithRetry(dht.DHT11, pin, false, 10)
@@ -76,7 +76,8 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	// temp := strconv.FormatFloat(temperature, 'f', 6, 64)
 	// humy := strconv.FormatFloat(humidity, 'f', 6, 64)
-	output := &Output{AnOutput: ""}
+
+	output := &Output{AnOutput: "temp"}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
 		return true, err
