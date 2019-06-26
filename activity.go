@@ -1,8 +1,6 @@
 package sample
 
 import (
-	"fmt"
-
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/yryz/ds18b20"
@@ -62,12 +60,14 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
-	for _, sensor := range sensors {
-		// t, err := ds18b20.Temperature(sensor)
-		if err == nil {
-			fmt.Printf("sensor: %s \n", sensor)
-		}
-	}
+	ctx.Logger().Debugf("Input: %s", sensors)
+
+	// for _, sensor := range sensors {
+	// 	// t, err := ds18b20.Temperature(sensor)
+	// 	if err == nil {
+	// 		fmt.Printf("sensor: %s \n", sensor)
+	// 	}
+	// }
 
 	output := &Output{AnOutput: "res"}
 	err = ctx.SetOutputObject(output)
