@@ -6,7 +6,6 @@ import (
 	"github.com/MichaelS11/go-dht"
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
-	"github.com/stianeikeland/go-rpio"
 )
 
 func init() {
@@ -51,13 +50,13 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	ctx.Logger().Debugf("Input: %s", input.AnInput)
 
-	error := rpio.Open()
-	if error != nil {
-		return true, err
-	}
-	pin := rpio.Pin(17)
-	pin.Input() // Input mode
-	res := pin.Read()
+	// error := rpio.Open()
+	// if error != nil {
+	// 	return true, err
+	// }
+	// pin := rpio.Pin(17)
+	// pin.Input() // Input mode
+	// res := pin.Read()
 	// pin := 11
 	// s := dht.DHT12
 	// temperature, humidity, retried, err := dht.ReadDHTxxWithRetry(dht.DHT11, pin, false, 10)
@@ -67,12 +66,12 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
-	dht1, err := dht.NewDHT("GPIO0", dht.Fahrenheit, "")
+	dht, err := dht.NewDHT("GPIO0", dht.Fahrenheit, "")
 	if err != nil {
 		return true, err
 	}
 
-	humidity, temperature, err := dht1.ReadRetry(11)
+	humidity, temperature, err := dht.ReadRetry(11)
 	if err != nil {
 		return true, err
 	}
