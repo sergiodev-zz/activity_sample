@@ -1,6 +1,9 @@
 package sample
 
 import (
+	"fmt"
+
+	"github.com/d2r2/go-dht"
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
 )
@@ -53,14 +56,16 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	// }
 	// pin := rpio.Pin(17)
 	// pin.Input() // Input mode
-	// pin := 11
-	// sensorType := dht.DHT11
-	// temperature, humidity, retried, err := dht.ReadDHTxxWithRetry(sensorType, pin, false, 10)
-	// if err != nil {
-	// 	return true, err
-	// }
+	pin := 11
+	sensorType := dht.DHT11
+	temperature, humidity, retried, err := dht.ReadDHTxxWithRetry(sensorType, pin, false, 10)
+	if err != nil {
+		return true, err
+	}
 
-	output := &Output{AnOutput: "(string)temperature"}
+	temp := fmt.Sprintf("%f", 123.456)
+
+	output := &Output{AnOutput: temp}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
 		return true, err
