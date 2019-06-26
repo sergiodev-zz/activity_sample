@@ -66,7 +66,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
-	dht, err := dht.NewDHT("GPIO19", dht.Fahrenheit, "")
+	dht, err := dht.NewDHT("GPIO19", dht.Celsius, "")
 	if err != nil {
 		return true, err
 	}
