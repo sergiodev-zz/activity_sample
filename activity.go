@@ -1,7 +1,6 @@
 package sample
 
 import (
-	"github.com/d2r2/go-dht"
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
 )
@@ -61,7 +60,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	// 	return true, err
 	// }
 
-	output := &Output{AnOutput: (string)temperature}
+	output := &Output{AnOutput: "(string)temperature"}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
 		return true, err
