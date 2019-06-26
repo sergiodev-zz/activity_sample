@@ -57,7 +57,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	pin.Input() // Input mode
 	// pin := 11
 	// sensorType := dht.DHT11
-	temperature, humidity, retried, err := dht.ReadDHTxxWithRetry(DHT11, pin, false, 10)
+	temperature, humidity, retried, err := dht.ReadDHTxxWithRetry(dht.DHT11, pin, false, 10)
 	if err != nil {
 		return true, err
 	}
