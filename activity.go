@@ -1,8 +1,6 @@
 package sample
 
 import (
-	"strconv"
-
 	"github.com/MichaelS11/go-dht"
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
@@ -71,12 +69,12 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
-	humidity, temperature, err := dht.ReadRetry(11)
-	if err != nil {
-		return true, err
-	}
+	// humidity, temperature, err := dht.ReadRetry(11)
+	// if err != nil {
+	// 	return true, err
+	// }
 
-	temp := strconv.FormatFloat(temperature, 'f', 6, 64)
+	// temp := strconv.FormatFloat(temperature, 'f', 6, 64)
 
 	output := &Output{AnOutput: "temp"}
 	err = ctx.SetOutputObject(output)
