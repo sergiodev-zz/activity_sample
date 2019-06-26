@@ -55,6 +55,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	pin := rpio.Pin(17)
 	pin.Input() // Input mode
 	res := pin.Read()
+	ctx.Logger().Debugf("Input: %s", res)
 	// pin := 11
 	// s := dht.DHT12
 	// temperature, humidity, retried, err := dht.ReadDHTxxWithRetry(dht.DHT11, pin, false, 10)
